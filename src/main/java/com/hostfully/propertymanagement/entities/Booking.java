@@ -12,13 +12,17 @@ import jakarta.persistence.ManyToOne;
 import lombok.Data;
 import com.hostfully.propertymanagement.misc.BookingStatus;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
 
 @Data
 @Entity
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
+@SuperBuilder
+@NoArgsConstructor
 public class Booking extends Reserving {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,5 +33,5 @@ public class Booking extends Reserving {
 
     @Column(length = 10)
     @Enumerated(EnumType.STRING)
-    BookingStatus status;
+    BookingStatus bookingStatus = BookingStatus.CONFIRMED;
 }

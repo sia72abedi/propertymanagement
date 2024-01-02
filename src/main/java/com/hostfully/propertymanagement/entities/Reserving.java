@@ -1,7 +1,10 @@
 package com.hostfully.propertymanagement.entities;
 
+import com.hostfully.propertymanagement.misc.RecordStatus;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -33,4 +36,8 @@ public class Reserving {
     @ManyToOne
     @JoinColumn(name = "property_id")
     private Property property;
+
+    @Column(length = 10)
+    @Enumerated(EnumType.STRING)
+    RecordStatus recordStatus = RecordStatus.EXIST;
 }

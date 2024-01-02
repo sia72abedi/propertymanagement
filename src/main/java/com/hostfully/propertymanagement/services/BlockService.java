@@ -7,6 +7,7 @@ import com.hostfully.propertymanagement.dto.Response;
 import com.hostfully.propertymanagement.dtomapper.BlockMapper;
 import com.hostfully.propertymanagement.entities.Block;
 import com.hostfully.propertymanagement.exceptions.InvalidInputException;
+import com.hostfully.propertymanagement.misc.RecordStatus;
 import com.hostfully.propertymanagement.repositories.BlockRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
@@ -42,7 +43,7 @@ public class BlockService {
     }
 
     public Response deleteBlockedById(int id) {
-        blockRepository.deleteById(id);
+        blockRepository.updateStatusById(RecordStatus.REMOVED,id);
         return Response.builder().message("Request Processed Successfully.").build();
     }
 }
