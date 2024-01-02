@@ -3,7 +3,6 @@ package com.hostfully.propertymanagement.controllers;
 import com.hostfully.propertymanagement.customvalidator.EntityExists;
 import com.hostfully.propertymanagement.dto.BlockingDto;
 import com.hostfully.propertymanagement.entities.Block;
-import com.hostfully.propertymanagement.entities.Property;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import com.hostfully.propertymanagement.dto.Response;
 import com.hostfully.propertymanagement.dto.BlockedGetDto;

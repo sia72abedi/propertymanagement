@@ -10,11 +10,13 @@ import com.hostfully.propertymanagement.dtomapper.BookingMapper;
 import com.hostfully.propertymanagement.dtomapper.CanceledBookingMapper;
 import com.hostfully.propertymanagement.entities.Booking;
 import com.hostfully.propertymanagement.entities.CanceledBooking;
+import com.hostfully.propertymanagement.entities.Guest;
 import com.hostfully.propertymanagement.exceptions.InvalidInputException;
 import com.hostfully.propertymanagement.misc.BookingStatus;
 import com.hostfully.propertymanagement.misc.RecordStatus;
 import com.hostfully.propertymanagement.repositories.BookingRepository;
 import com.hostfully.propertymanagement.repositories.CanceledBookingRepository;
+import com.hostfully.propertymanagement.repositories.GuestRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
@@ -30,9 +32,15 @@ public class BookingService {
     private final BookingRepository bookingRepository;
     private final BookingMapper bookingMapper;
     private final CanceledBookingRepository canceledBookingRepository;
+    private final GuestRepository guestRepository;
 
     public Response bookProperty(BookingDto bookingDto) {
         Booking booking = bookingMapper.toEntity(bookingDto);
+        Optional<Guest> optionalGuest = guestRepository.findByGuestEmailAddressOrPhoneNumberOrPassportNo(booking.getGuest().getGuestEmailAddress()
+        ,booking.getGuest().getGuestPhoneNo(), booking.getGuest().getGuestPassportId());
+        if(optionalGuest.isPresent()){
+            booking.getGuest().setId(optionalGuest.get().getId());
+        }
         booking = bookingRepository.save(booking);
         return Response.builder().id(String.valueOf(booking.getId()))
                 .href(WebMvcLinkBuilder.linkTo(BookingController.class).slash(booking.getId()).withSelfRel().toString())
@@ -41,6 +49,11 @@ public class BookingService {
 
     public Response editBookingById(int id, BookingUpdateDto bookingUpdateDto) {
         Booking booking = bookingRepository.getReferenceById(id);
+        Optional<Guest> optionalGuest = guestRepository.findByGuestEmailAddressOrPhoneNumberOrPassportNo(booking.getGuest().getGuestEmailAddress()
+        ,booking.getGuest().getGuestPhoneNo(),booking.getGuest().getGuestPassportId());
+        if(optionalGuest.isPresent()){
+            booking.getGuest().setId(optionalGuest.get().getId());
+        }
         BeanUtils.copyProperties(bookingUpdateDto,booking);
         bookingRepository.save(booking);
         return Response.builder().id(String.valueOf(booking.getId()))

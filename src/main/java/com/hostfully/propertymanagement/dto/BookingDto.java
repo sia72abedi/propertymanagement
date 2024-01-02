@@ -5,7 +5,7 @@ import com.hostfully.propertymanagement.customvalidator.EntityExists;
 import com.hostfully.propertymanagement.customvalidator.StartDateBeforeEndDate;
 import com.hostfully.propertymanagement.entities.Booking;
 import com.hostfully.propertymanagement.entities.Property;
-import jakarta.validation.constraints.PastOrPresent;
+import jakarta.validation.constraints.FutureOrPresent;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -14,8 +14,8 @@ import java.time.LocalDate;
  * DTO for {@link Booking}
  */
 @StartDateBeforeEndDate
-public record BookingDto(@PastOrPresent(message = "startDate Should Not Be Future.") LocalDate startDate,
-                         @PastOrPresent(message = "etartDate Should Not Be Future.") LocalDate endDate,
+public record BookingDto(@FutureOrPresent(message = "startDate Should Not Be Past.") LocalDate startDate,
+                         @FutureOrPresent(message = "endDate Should Not Be Past.") LocalDate endDate,
                          @EntityExists(entityType = Property.class,message = "Property Does Not Exist.") Integer propertyId,
                          GuestDto guest) implements Serializable {
 }

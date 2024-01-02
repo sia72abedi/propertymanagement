@@ -77,7 +77,7 @@ class BlockControllerTest {
                 .andReturn();
         assertEquals(400,mvcResult.getResponse().getStatus());
         Response actualResponse = objectMapper.readValue(mvcResult.getResponse().getContentAsString(),Response.class);
-        ResponseAssertion.assertThat(actualResponse).isMessageContain("startDate Should Not Be Future");
+        ResponseAssertion.assertThat(actualResponse).isMessageContain("startDate Should Not Be Past.");
         ResponseAssertion.assertThat(actualResponse).isIdNullOrEmpty();
         ResponseAssertion.assertThat(actualResponse).isHrefNullOrEmpty();
     }
@@ -93,7 +93,7 @@ class BlockControllerTest {
                 .andReturn();
         assertEquals(400,mvcResult.getResponse().getStatus());
         Response actualResponse = objectMapper.readValue(mvcResult.getResponse().getContentAsString(),Response.class);
-        ResponseAssertion.assertThat(actualResponse).isMessageContain("endDate Should Not Be Future");
+        ResponseAssertion.assertThat(actualResponse).isMessageContain("endDate Should Not Be Past.");
         ResponseAssertion.assertThat(actualResponse).isIdNullOrEmpty();
         ResponseAssertion.assertThat(actualResponse).isHrefNullOrEmpty();
     }
@@ -204,7 +204,7 @@ class BlockControllerTest {
                 .andReturn();
         assertEquals(400,mvcResult.getResponse().getStatus());
         Response actualResponse = objectMapper.readValue(mvcResult.getResponse().getContentAsString(),Response.class);
-        ResponseAssertion.assertThat(actualResponse).isMessageContain("startDate Should Not Be Future");
+        ResponseAssertion.assertThat(actualResponse).isMessageContain("startDate Should Not Be Past.");
         ResponseAssertion.assertThat(actualResponse).isIdNullOrEmpty();
         ResponseAssertion.assertThat(actualResponse).isHrefNullOrEmpty();
     }
@@ -220,7 +220,7 @@ class BlockControllerTest {
                 .andReturn();
         assertEquals(400,mvcResult.getResponse().getStatus());
         Response actualResponse = objectMapper.readValue(mvcResult.getResponse().getContentAsString(),Response.class);
-        ResponseAssertion.assertThat(actualResponse).isMessageContain("endDate Should Not Be Future");
+        ResponseAssertion.assertThat(actualResponse).isMessageContain("endDate Should Not Be Past.");
         ResponseAssertion.assertThat(actualResponse).isIdNullOrEmpty();
         ResponseAssertion.assertThat(actualResponse).isHrefNullOrEmpty();
     }

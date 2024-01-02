@@ -7,6 +7,9 @@ import com.hostfully.propertymanagement.dto.BlockingDto;
 import com.hostfully.propertymanagement.dto.Response;
 import com.hostfully.propertymanagement.dtomapper.BlockMapper;
 import com.hostfully.propertymanagement.entities.Block;
+import com.hostfully.propertymanagement.entities.BlockReason;
+import com.hostfully.propertymanagement.entities.HotelProperty;
+import com.hostfully.propertymanagement.entities.Property;
 import com.hostfully.propertymanagement.exceptions.InvalidInputException;
 import com.hostfully.propertymanagement.repositories.BlockRepository;
 import org.junit.jupiter.api.AfterEach;
@@ -68,6 +71,8 @@ class BlockServiceTest {
     }
     @Test
     void updateBlockedById_RegularCallMapper() {
+        Block block = Block.builder().message("test").build();
+        when(blockMapper.toEntity(any(BlockingDto.class))).thenReturn(block);
         ArgumentCaptor<BlockingDto> blockingDtoArgumentCaptor = ArgumentCaptor.forClass(BlockingDto.class);
         BlockingDto blockingDto = new BlockingDto(LocalDate.of(2023,1,1),
                 LocalDate.now(),1,1,"test");
@@ -78,6 +83,11 @@ class BlockServiceTest {
     }
     @Test
     void updateBlockedById_RegularCallRepo() {
+        BlockReason reason = new BlockReason(1,"reason");
+        Property property = HotelProperty.builder().id(1).build();
+        Block block = Block.builder().reason(reason).endDate(LocalDate.now())
+                .startDate(LocalDate.of(2023,1,1)).property(property).message("test2").build();
+        when(blockMapper.toEntity(any(BlockingDto.class))).thenReturn(block);
         ArgumentCaptor<Block> blockArgumentCaptor = ArgumentCaptor.forClass(Block.class);
         BlockingDto blockingDto = new BlockingDto(LocalDate.of(2023,1,1),
                 LocalDate.now(),1,1,"test2");
