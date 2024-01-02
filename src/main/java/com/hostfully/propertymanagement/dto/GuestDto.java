@@ -14,9 +14,9 @@ import java.io.Serializable;
  */
 @Value
 public class GuestDto implements Serializable {
-    @Size(max = 50, message = "Guest First Name Length <= 50")
+    @Size(max = 50, message = "Guest FirstName Length <= 50")
     String guestFirstName;
-    @Size(max = 100, message = "Guest Last Name Length <= 100")
+    @Size(max = 100, message = "Guest LastName Length <= 100")
     String guestLastName;
     @Email
     String guestEmailAddress;

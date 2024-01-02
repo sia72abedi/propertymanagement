@@ -22,4 +22,46 @@ public class ResponseAssertion extends AbstractAssert<ResponseAssertion, Respons
         }
         return this;
     }
+
+    public ResponseAssertion hasMessage(String message){
+        if (!actual.getMessage().equals(message)){
+            failWithMessage("message Is Not Expected");
+        }
+        return this;
+    }
+
+    public ResponseAssertion isMessageContain(String partialMessage){
+        if (!actual.getMessage().contains(partialMessage)){
+            failWithMessage("message Is Not Expected.");
+        }
+        return this;
+    }
+
+    public ResponseAssertion isHrefContain(String partialHref){
+        if (!actual.getMessage().contains(partialHref)){
+            failWithMessage("href Is Not Expected.");
+        }
+        return this;
+    }
+
+    public ResponseAssertion isIdEqual(String id){
+        if (!actual.getMessage().equals(id)){
+            failWithMessage("id Is Not Expected.");
+        }
+        return this;
+    }
+
+    public ResponseAssertion isHrefNullOrEmpty(){
+        if (actual.getHref() != null || !actual.getHref().isBlank()){
+            failWithMessage("href Is Not Expected.");
+        }
+        return this;
+    }
+
+    public ResponseAssertion isIdNullOrEmpty(){
+        if (actual.getId() != null || !actual.getId().isBlank()){
+            failWithMessage("href Is Not Expected.");
+        }
+        return this;
+    }
 }

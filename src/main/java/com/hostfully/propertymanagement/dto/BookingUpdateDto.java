@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 @StartDateBeforeEndDate
-public record BookingUpdateDto(@PastOrPresent(message = "StartDate Should Not Be Future.") LocalDate startDate,
-                               @PastOrPresent(message = "StartDate Should Not Be Future.") LocalDate endDate,
+public record BookingUpdateDto(@PastOrPresent(message = "startDate Should Not Be Future.") LocalDate startDate,
+                               @PastOrPresent(message = "etartDate Should Not Be Future.") LocalDate endDate,
                                GuestDto guest) implements Serializable {
         }

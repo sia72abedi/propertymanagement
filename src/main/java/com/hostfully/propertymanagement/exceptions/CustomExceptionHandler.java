@@ -25,7 +25,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler
 {
     @ExceptionHandler(Exception.class)
     public final ResponseEntity<Object> handleAllExceptions(Exception ex, WebRequest request) {
-        Response response = new Response("An Error Occurred During Processing The Request.");
+        Response response = Response.builder().message("An Error Occurred During Processing The Request.").build();
         logger.error("An Error Occurred During Processing The Request.");
         ex.printStackTrace();
         return new ResponseEntity(response, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -33,28 +33,28 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler
 
     @ExceptionHandler(DataNotFoundException.class)
     public final ResponseEntity<Object> handleDataNotFoundExceptions(DataNotFoundException ex, WebRequest request) {
-        Response response = new Response(ex.getMessage());
+        Response response = Response.builder().message(ex.getMessage()).build();
         logger.error(ex.getMessage());
         return new ResponseEntity(response, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(DataConflictException.class)
     public final ResponseEntity<Object> handleDataNotFoundExceptions(DataConflictException ex, WebRequest request) {
-        Response response = new Response(ex.getMessage());
+        Response response = Response.builder().message(ex.getMessage()).build();
         logger.error(ex.getMessage());
         return new ResponseEntity(response, HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler(InvalidInputException.class)
     public final ResponseEntity<Object> handleDataFormatExceptions(InvalidInputException ex, WebRequest request) {
-        Response response = new Response(ex.getMessage());
+        Response response = Response.builder().message(ex.getMessage()).build();
         logger.error(ex.getMessage());
         return new ResponseEntity(response, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(InternalServerException.class)
     public final ResponseEntity<Object> handleInternalServerExceptions(Exception ex, WebRequest request) {
-        Response response = new Response("InternalServerException Occurred During Processing The Request.");
+        Response response = Response.builder().message("InternalServerException Occurred During Processing The Request.").build();
         logger.error("InternalServerException Occurred During Processing The Request.");
         ex.printStackTrace();
         return new ResponseEntity(response, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -64,7 +64,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler
     public final ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
         String message = String.format("Validation Failed: %s",Arrays.stream(ex.getDetailMessageArguments())
                 .filter(o -> !((String) o).trim().isEmpty()).toList());
-        Response response = new Response(message);
+        Response response = Response.builder().message(message).build();
         logger.error(message);
         ex.printStackTrace();
         return new ResponseEntity(response, HttpStatus.BAD_REQUEST);
@@ -74,7 +74,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler
     public final ResponseEntity<Object> handleConstraintViolationException(ConstraintViolationException ex, WebRequest request) {
         List<String> exMessageList = ex.getConstraintViolations().stream().map(ConstraintViolation::getMessage).collect(Collectors.toList());
         String message = String.format("Validation Failed: %s",exMessageList);
-        Response response = new Response(message);
+        Response response = Response.builder().message(message).build();
         logger.error(message);
         ex.printStackTrace();
         return new ResponseEntity(response, HttpStatus.BAD_REQUEST);

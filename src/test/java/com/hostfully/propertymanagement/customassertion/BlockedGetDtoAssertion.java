@@ -1,19 +1,18 @@
 package com.hostfully.propertymanagement.customassertion;
 
 import com.hostfully.propertymanagement.dto.BlockedGetDto;
-import com.hostfully.propertymanagement.dto.BlockingDto;
 import com.hostfully.propertymanagement.entities.Block;
 import org.assertj.core.api.AbstractAssert;
 
-public class BlockedDtoAssertion extends AbstractAssert<BlockedDtoAssertion, BlockedGetDto> {
-    public BlockedDtoAssertion(BlockedGetDto blockedGetDto) {
-        super(blockedGetDto, BlockedDtoAssertion.class);
+public class BlockedGetDtoAssertion extends AbstractAssert<BlockedGetDtoAssertion, BlockedGetDto> {
+    public BlockedGetDtoAssertion(BlockedGetDto blockedGetDto) {
+        super(blockedGetDto, BlockedGetDtoAssertion.class);
     }
 
-    public static BlockedDtoAssertion assertThat(BlockedGetDto actual) {
-        return new BlockedDtoAssertion(actual);
+    public static BlockedGetDtoAssertion assertThat(BlockedGetDto actual) {
+        return new BlockedGetDtoAssertion(actual);
     }
-    public BlockedDtoAssertion isEquivalent(BlockedGetDto blockedGetDto){
+    public BlockedGetDtoAssertion isEquivalent(BlockedGetDto blockedGetDto){
         if (!blockedGetDto.startDate().isEqual(actual.startDate())){
             failWithMessage("startDate Is Not Expected");
         }else if (!blockedGetDto.endDate().isEqual(actual.endDate())){
@@ -28,7 +27,7 @@ public class BlockedDtoAssertion extends AbstractAssert<BlockedDtoAssertion, Blo
         return this;
     }
 
-    public BlockedDtoAssertion isEquivalent(Block block){
+    public BlockedGetDtoAssertion isEquivalent(Block block){
         if (!block.getStartDate().isEqual(actual.startDate())){
             failWithMessage("startDate Is Not Expected");
         }else if (!block.getEndDate().isEqual(actual.endDate())){

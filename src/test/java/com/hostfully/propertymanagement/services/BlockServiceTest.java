@@ -1,17 +1,13 @@
 package com.hostfully.propertymanagement.services;
 
 import com.hostfully.propertymanagement.customassertion.BlockAssertion;
-import com.hostfully.propertymanagement.customassertion.BlockedDtoAssertion;
 import com.hostfully.propertymanagement.customassertion.BlockingDtoAssertion;
 import com.hostfully.propertymanagement.customassertion.ResponseAssertion;
-import com.hostfully.propertymanagement.dto.BlockedGetDto;
 import com.hostfully.propertymanagement.dto.BlockingDto;
 import com.hostfully.propertymanagement.dto.Response;
 import com.hostfully.propertymanagement.dtomapper.BlockMapper;
 import com.hostfully.propertymanagement.entities.Block;
-import com.hostfully.propertymanagement.entities.BlockReason;
-import com.hostfully.propertymanagement.entities.HotelProperty;
-import com.hostfully.propertymanagement.entities.Property;
+import com.hostfully.propertymanagement.exceptions.InvalidInputException;
 import com.hostfully.propertymanagement.repositories.BlockRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
@@ -24,8 +20,9 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import java.time.LocalDate;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -99,35 +96,25 @@ class BlockServiceTest {
         int id = 10;
         blockService.getBlockedById(id);
         verify(blockRepository,times(1)).getReferenceById(idArgumentCaptor.capture());
+
         Assertions.assertEquals(idArgumentCaptor.getValue(),id);
     }
     @Test
-    void getBlockedById_RegularCallMapper() {
-        ArgumentCaptor<Block> blockArgumentCaptor = ArgumentCaptor.forClass(Block.class);
-        int blockId = 10;
-        int blockReasonId = 1;
-        BlockReason blockReason = new BlockReason(blockReasonId,"reason");
-        Property property = HotelProperty.builder().roomCount(2).build();
-        Block block = Block.builder().id(blockId).message("test").reason(blockReason).endDate(LocalDate.of(2023,1,1)).build();
-        when(blockRepository.getReferenceById(anyInt())).thenReturn(block);
-        BlockedGetDto blockedGetDto = new BlockedGetDto(LocalDate.of(2023,1,1),
-                LocalDate.of(2023,2,1),property,"test","reson");
-        when(blockMapper.toGetDto(any(Block.class))).thenReturn(blockedGetDto);
-        verify(blockMapper,times(1)).toGetDto(blockArgumentCaptor.capture());
-        BlockedGetDto actualBlockedGetDto = blockService.getBlockedById(blockId);
-        BlockedGetDto expectedBlockedGetDto = new BlockedGetDto(LocalDate.of(2023,1,1),
-                LocalDate.of(2023,2,1),property,"test","reson");
-        BlockAssertion.assertThat(blockArgumentCaptor.getValue()).isEquivalent(block);
-        BlockedDtoAssertion.assertThat(actualBlockedGetDto).isEquivalent(expectedBlockedGetDto);
-
+    void getBlockedById_EntityNotExist() {
+        ArgumentCaptor<Integer> idArgumentCaptor = ArgumentCaptor.forClass(Integer.class);
+        int id = 10;
+        InvalidInputException exception = assertThrows(InvalidInputException.class,() -> blockService.getBlockedById(id));
+        assertEquals("Block Does Not Exist.",exception.getMessage());
     }
+
 
     @Test
     void deleteBlockedById() {
         ArgumentCaptor<Integer> idArgumentCaptor = ArgumentCaptor.forClass(Integer.class);
         int blockId = 10;
-        blockService.deleteBlockedById(blockId);
+        Response actualResponse = blockService.deleteBlockedById(blockId);
         verify(blockRepository,times(1)).deleteById(idArgumentCaptor.capture());
         Assertions.assertEquals(idArgumentCaptor.getValue(),10);
+        ResponseAssertion.assertThat(actualResponse).hasMessage("Request Processed Successfully.");
     }
 }

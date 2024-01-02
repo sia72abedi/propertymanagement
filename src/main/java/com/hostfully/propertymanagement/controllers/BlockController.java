@@ -47,8 +47,7 @@ public class BlockController {
     }
 
     @GetMapping(value = "api/v1/block/{block-id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<BlockedGetDto> getBlockedById(@EntityExists(entityType = Block.class,message = "Block Does Not Exist.")
-                                                            @PathVariable(value = "block-id") int id){
+    public ResponseEntity<BlockedGetDto> getBlockedById(@PathVariable(value = "block-id") int id){
         BlockedGetDto response = blockService.getBlockedById(id);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

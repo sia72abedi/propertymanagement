@@ -14,8 +14,8 @@ import java.time.LocalDate;
  * DTO for {@link Booking}
  */
 @StartDateBeforeEndDate
-public record BookingDto(@PastOrPresent(message = "StartDate Should Not Be Future.") LocalDate startDate,
-                         @PastOrPresent(message = "StartDate Should Not Be Future.") LocalDate endDate,
+public record BookingDto(@PastOrPresent(message = "startDate Should Not Be Future.") LocalDate startDate,
+                         @PastOrPresent(message = "etartDate Should Not Be Future.") LocalDate endDate,
                          @EntityExists(entityType = Property.class,message = "Property Does Not Exist.") Integer propertyId,
                          GuestDto guest) implements Serializable {
 }

@@ -14,8 +14,8 @@ import java.time.LocalDate;
  * DTO for {@link Block}
  */
 @StartDateBeforeEndDate
-public record BlockingDto(@PastOrPresent(message = "StartDate Should Not Be Future.") LocalDate startDate,
-                          @PastOrPresent(message = "StartDate Should Not Be Future.") LocalDate endDate,
+public record BlockingDto(@PastOrPresent(message = "startDate Should Not Be Future.") LocalDate startDate,
+                          @PastOrPresent(message = "endDate Should Not Be Future.") LocalDate endDate,
                           @EntityExists(entityType = Property.class,message = "Property Does Not Exist.") Integer propertyId,
                           @EntityExists(entityType = Property.class,message = "Reason Does Not Exist.") Integer reasonId,
                           @Size(max = 500,message = "Message Length < 500.") String message) implements Serializable {
