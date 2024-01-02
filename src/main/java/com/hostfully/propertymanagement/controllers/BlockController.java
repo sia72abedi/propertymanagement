@@ -40,7 +40,7 @@ public class BlockController {
     }
     @PutMapping(value = "api/v1/block/{block-id}", consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Response> updateBlockedById(@EntityExists(entityType = Block.class,message = "Block Does Not Exist.")
-                                                          @PathVariable(value = "block-id") String id,
+                                                          @PathVariable(value = "block-id") int id,
                                                       @Valid @RequestBody BlockingDto blockingDto){
         Response response = blockService.updateBlockedById(id, blockingDto);
         return new ResponseEntity<>(response, HttpStatus.OK);
@@ -48,14 +48,14 @@ public class BlockController {
 
     @GetMapping(value = "api/v1/block/{block-id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<BlockedGetDto> getBlockedById(@EntityExists(entityType = Block.class,message = "Block Does Not Exist.")
-                                                            @PathVariable(value = "block-id") String id){
+                                                            @PathVariable(value = "block-id") int id){
         BlockedGetDto response = blockService.getBlockedById(id);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @DeleteMapping(value = "api/v1/block/{block-id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Response> deleteBlockedById(@EntityExists(entityType = Block.class,message = "Block Does Not Exist.")
-                                                      @PathVariable(value = "block-id") String id){
+                                                      @PathVariable(value = "block-id") int id){
         Response response = blockService.deleteBlockedById(id);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

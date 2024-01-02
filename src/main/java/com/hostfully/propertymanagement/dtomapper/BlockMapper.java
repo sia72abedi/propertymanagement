@@ -27,6 +27,7 @@ public interface BlockMapper {
     Block partialUpdate(BlockingDto blockingDto, @MappingTarget Block block);
 
 
+    @Mapping(source = "reason", target = "reason.reason")
     Block toEntity(BlockedGetDto blockedGetDto);
 
     @InheritInverseConfiguration(name = "toEntity")

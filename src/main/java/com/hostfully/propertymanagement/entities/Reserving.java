@@ -9,13 +9,19 @@ import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Data
+@SuperBuilder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Reserving {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -7,6 +7,6 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 @StartDateBeforeEndDate
-public record BlockedGetDto(LocalDate startDate, LocalDate endDate, Property property, Integer reasonId,
-                            String message) implements Serializable {
+public record BlockedGetDto(LocalDate startDate, LocalDate endDate, Property property,
+                            String message, String reason) implements Serializable {
 }

@@ -11,10 +11,14 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.Data;
 import com.hostfully.propertymanagement.misc.BookingStatus;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 
 @Data
 @Entity
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 public class Booking extends Reserving {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
