@@ -1,5 +1,7 @@
 package com.hostfully.propertymanagement.entities;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.Entity;
@@ -18,6 +20,10 @@ import lombok.experimental.SuperBuilder;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "property_type")
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "propertyType")
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = HotelProperty.class, name = "Hotel")
+})
 public class Property {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

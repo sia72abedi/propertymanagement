@@ -1,9 +1,7 @@
 package com.hostfully.propertymanagement.controllers;
 
-import com.hostfully.propertymanagement.customvalidator.EntityExists;
 import com.hostfully.propertymanagement.dto.BookingDto;
 import com.hostfully.propertymanagement.dto.CancelBookingDto;
-import com.hostfully.propertymanagement.entities.Booking;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import com.hostfully.propertymanagement.dto.Response;
 import com.hostfully.propertymanagement.dto.BookingUpdateDto;
@@ -25,7 +23,6 @@ import com.hostfully.propertymanagement.services.BookingService;
 
 @RestController
 @Tag(name = "booking")
-@Validated
 public class BookingController {
     private final BookingService bookingService;
 

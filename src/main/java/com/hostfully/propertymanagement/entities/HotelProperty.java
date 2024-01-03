@@ -1,5 +1,7 @@
 package com.hostfully.propertymanagement.entities;
 
+
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
@@ -16,6 +18,7 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @NoArgsConstructor
+@JsonTypeName("Hotel")
 public class HotelProperty extends Property{
     @Column
     private int roomCount;
