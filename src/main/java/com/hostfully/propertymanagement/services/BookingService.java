@@ -15,6 +15,7 @@ import com.hostfully.propertymanagement.entities.CanceledBooking;
 import com.hostfully.propertymanagement.entities.Guest;
 import com.hostfully.propertymanagement.exceptions.InvalidInputException;
 import com.hostfully.propertymanagement.misc.BookingStatus;
+import com.hostfully.propertymanagement.misc.GlobalMessages;
 import com.hostfully.propertymanagement.misc.RecordStatus;
 import com.hostfully.propertymanagement.repositories.BookingRepository;
 import com.hostfully.propertymanagement.repositories.CanceledBookingRepository;
@@ -50,7 +51,7 @@ public class BookingService {
         booking = bookingRepository.save(booking);
         return Response.builder().id(String.valueOf(booking.getId()))
                 .href(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(BookingController.class).getBookingById(booking.getId())).toString())
-                .message("Request Processed Successfully.").build();
+                .message(GlobalMessages.SUCCESS).build();
     }
 
     @Transactional
@@ -68,7 +69,7 @@ public class BookingService {
         bookingRepository.save(booking);
         return Response.builder().id(String.valueOf(booking.getId()))
                 .href(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(BookingController.class).getBookingById(booking.getId())).toString())
-                .message("Request Processed Successfully.").build();
+                .message(GlobalMessages.SUCCESS).build();
     }
 
     private Guest checkIsUserExistAndUpdateIt(GuestDto guestDto){
@@ -95,7 +96,7 @@ public class BookingService {
         canceledBooking.setBooking(booking);
         canceledBooking.setRecordStatus(RecordStatus.EXIST);
         canceledBookingRepository.save(canceledBooking);
-        return Response.builder().message("Request Processed Successfully.").build();
+        return Response.builder().message(GlobalMessages.SUCCESS).build();
     }
 
     @Transactional
@@ -107,7 +108,7 @@ public class BookingService {
         canceledBookingRepository.removeExistingByBookingId(id);
         return Response.builder().id(String.valueOf(id))
                 .href(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(BookingController.class).getBookingById(id)).toString())
-                .message("Request Processed Successfully.").build();
+                .message(GlobalMessages.SUCCESS).build();
     }
 
     @Transactional
@@ -117,7 +118,7 @@ public class BookingService {
             throw new InvalidInputException("Booking Does Not Exist(Maybe Removed Previously).");
         }
         canceledBookingRepository.removeExistingByBookingId(id);
-        return Response.builder().message("Request Processed Successfully.").build();
+        return Response.builder().message(GlobalMessages.SUCCESS).build();
     }
 
     public BookingGetDto getBookingDtoById(int id) {

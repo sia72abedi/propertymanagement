@@ -5,8 +5,6 @@ import com.hostfully.propertymanagement.customvalidator.PassportNumber;
 import com.hostfully.propertymanagement.customvalidator.PhoneNumber;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
-import lombok.Value;
-
 import java.io.Serializable;
 
 /**

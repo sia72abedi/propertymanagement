@@ -5,12 +5,9 @@ import jakarta.validation.ConstraintValidatorContext;
 
 import java.lang.reflect.Field;
 
-public class startDateBeforeEndDateValidator implements
+public class StartDateBeforeEndDateValidator implements
         ConstraintValidator<StartDateBeforeEndDate, Object> {
 
-    @Override
-    public void initialize(StartDateBeforeEndDate startDateBeforeEndDate) {
-    }
 
     @Override
     public boolean isValid(Object object, ConstraintValidatorContext cxt) {

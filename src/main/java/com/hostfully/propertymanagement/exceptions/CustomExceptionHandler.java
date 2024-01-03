@@ -17,47 +17,46 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Priority(1)
 @ControllerAdvice
 public class CustomExceptionHandler extends ResponseEntityExceptionHandler
 {
     @ExceptionHandler(Exception.class)
-    public final ResponseEntity<Object> handleAllExceptions(Exception ex, WebRequest request) {
+    public final ResponseEntity<Response> handleAllExceptions(Exception ex, WebRequest request) {
         Response response = Response.builder().message("An Error Occurred During Processing The Request.").build();
         logger.error("An Error Occurred During Processing The Request.");
         ex.printStackTrace();
-        return new ResponseEntity(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(DataNotFoundException.class)
-    public final ResponseEntity<Object> handleDataNotFoundExceptions(DataNotFoundException ex, WebRequest request) {
+    public final ResponseEntity<Response> handleDataNotFoundExceptions(DataNotFoundException ex, WebRequest request) {
         Response response = Response.builder().message(ex.getMessage()).build();
         logger.error(ex.getMessage());
-        return new ResponseEntity(response, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(DataConflictException.class)
-    public final ResponseEntity<Object> handleDataNotFoundExceptions(DataConflictException ex, WebRequest request) {
+    public final ResponseEntity<Response> handleDataNotFoundExceptions(DataConflictException ex, WebRequest request) {
         Response response = Response.builder().message(ex.getMessage()).build();
         logger.error(ex.getMessage());
-        return new ResponseEntity(response, HttpStatus.CONFLICT);
+        return new ResponseEntity<>(response, HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler(InvalidInputException.class)
-    public final ResponseEntity<Object> handleDataFormatExceptions(InvalidInputException ex, WebRequest request) {
+    public final ResponseEntity<Response> handleDataFormatExceptions(InvalidInputException ex, WebRequest request) {
         Response response = Response.builder().message(ex.getMessage()).build();
         logger.error(ex.getMessage());
-        return new ResponseEntity(response, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(InternalServerException.class)
-    public final ResponseEntity<Object> handleInternalServerExceptions(Exception ex, WebRequest request) {
+    public final ResponseEntity<Response> handleInternalServerExceptions(Exception ex, WebRequest request) {
         Response response = Response.builder().message("InternalServerException Occurred During Processing The Request.").build();
         logger.error("InternalServerException Occurred During Processing The Request.");
         ex.printStackTrace();
-        return new ResponseEntity(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @Override
@@ -67,16 +66,16 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler
         Response response = Response.builder().message(message).build();
         logger.error(message);
         ex.printStackTrace();
-        return new ResponseEntity(response, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(ConstraintViolationException.class)
-    public final ResponseEntity<Object> handleConstraintViolationException(ConstraintViolationException ex, WebRequest request) {
-        List<String> exMessageList = ex.getConstraintViolations().stream().map(ConstraintViolation::getMessage).collect(Collectors.toList());
+    public final ResponseEntity<Response> handleConstraintViolationException(ConstraintViolationException ex, WebRequest request) {
+        List<String> exMessageList = ex.getConstraintViolations().stream().map(ConstraintViolation::getMessage).toList();
         String message = String.format("Validation Failed: %s",exMessageList);
         Response response = Response.builder().message(message).build();
         logger.error(message);
         ex.printStackTrace();
-        return new ResponseEntity(response, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 }

@@ -2,7 +2,6 @@ package com.hostfully.propertymanagement.repositories;
 
 import com.hostfully.propertymanagement.dto.BlockedGetDto;
 import com.hostfully.propertymanagement.entities.Block;
-import com.hostfully.propertymanagement.misc.RecordStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

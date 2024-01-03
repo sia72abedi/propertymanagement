@@ -7,6 +7,7 @@ import com.hostfully.propertymanagement.dto.Response;
 import com.hostfully.propertymanagement.dtomapper.BlockMapper;
 import com.hostfully.propertymanagement.entities.Block;
 import com.hostfully.propertymanagement.exceptions.InvalidInputException;
+import com.hostfully.propertymanagement.misc.GlobalMessages;
 import com.hostfully.propertymanagement.misc.RecordStatus;
 import com.hostfully.propertymanagement.repositories.BlockRepository;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +29,7 @@ public class BlockService {
         block = blockRepository.save(block);
         return Response.builder().id(String.valueOf(block.getId()))
                 .href(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(BlockController.class).getBlockedById(block.getId())).toString())
-                .message("Request Processed Successfully.").build();
+                .message(GlobalMessages.SUCCESS).build();
     }
 
     public Response updateBlockedById(int id, BlockingDto blockingDto) {
@@ -39,7 +40,7 @@ public class BlockService {
         blockRepository.save(block);
         return Response.builder().id(String.valueOf(id))
                 .href(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(BlockController.class).getBlockedById(block.getId())).toString())
-                .message("Request Processed Successfully.").build();
+                .message(GlobalMessages.SUCCESS).build();
     }
 
     public BlockedGetDto getBlockedById(int id) {
@@ -52,6 +53,6 @@ public class BlockService {
         if (count == 0){
             throw new InvalidInputException("Block Does Not Exist.");
         }
-        return Response.builder().message("Request Processed Successfully.").build();
+        return Response.builder().message(GlobalMessages.SUCCESS).build();
     }
 }
