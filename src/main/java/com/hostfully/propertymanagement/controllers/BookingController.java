@@ -34,42 +34,40 @@ public class BookingController {
         this.bookingService = bookingService;
     }
 
-    @PostMapping(value = "api/v1/booking/{booking-id}", consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "api/v1/bookings/", consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Response> bookProperty(@Valid  @RequestBody BookingDto bookingDto){
         Response response = bookingService.bookProperty(bookingDto);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
-    @PatchMapping(value = "api/v1/booking/{booking-id}", consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
+    @PatchMapping(value = "api/v1/bookings/{booking-id}", consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Response> editBookingById(@PathVariable(value = "booking-id") int id,
                                                     @Valid @RequestBody BookingUpdateDto bookingUpdateDto){
         Response response = bookingService.editBookingById(id, bookingUpdateDto);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PatchMapping(value = "api/v1/booking/cancel/{booking-id}", consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
+    @PatchMapping(value = "/api/v1/bookings/{booking-id}/cancel", consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Response> cancelBookingById(@PathVariable(value = "booking-id") int id,
                                                       @Valid @RequestBody CancelBookingDto cancelBookingDto){
         Response response = bookingService.cancelBookingById(id, cancelBookingDto);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PatchMapping(value = "api/v1/booking/rebook/{rebook-id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Response> rebookCanceledBookingById(@EntityExists(entityType = Booking.class,message = "Booking Does Not Exist.")
-                                                                  @PathVariable(value = "rebook-id") int id){
+    @PatchMapping(value = "/api/v1/bookings/{rebook-id}/rebook", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Response> rebookCanceledBookingById(@PathVariable(value = "rebook-id") int id){
         Response response = bookingService.rebookCanceledBookingById(id);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @DeleteMapping(value = "api/v1/booking/{booking-id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Response> deleteBookingById(@EntityExists(entityType = Booking.class,message = "Booking Does Not Exist.")
-                                                          @PathVariable(value = "booking-id") int id){
+    @DeleteMapping(value = "/api/v1/bookings/{booking-id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Response> deleteBookingById(@PathVariable(value = "booking-id") int id){
         Response response = bookingService.deleteBookingById(id);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping(value = "api/v1/booking/{booking-id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/api/v1/bookings/{booking-id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<BookingGetDto> getBookingById(@PathVariable(value = "booking-id") int id){
-        BookingGetDto response = bookingService.getBookingById(id);
+        BookingGetDto response = bookingService.getBookingDtoById(id);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

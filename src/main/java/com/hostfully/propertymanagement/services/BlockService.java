@@ -20,20 +20,25 @@ import java.util.Optional;
 public class BlockService {
     private final BlockMapper blockMapper;
     private final BlockRepository blockRepository;
+    private final ReservedService reservedService;
     public Response blockingProperty(BlockingDto blockingDto) {
+        reservedService.isPropertyReserved(null,blockingDto.propertyId(),blockingDto.startDate(),blockingDto.endDate());
         Block block = blockMapper.toEntity(blockingDto);
+        block.setRecordStatus(RecordStatus.EXIST);
         block = blockRepository.save(block);
         return Response.builder().id(String.valueOf(block.getId()))
-                .href(WebMvcLinkBuilder.linkTo(BlockController.class).slash(block.getId()).withSelfRel().toString())
+                .href(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(BlockController.class).getBlockedById(block.getId())).toString())
                 .message("Request Processed Successfully.").build();
     }
 
     public Response updateBlockedById(int id, BlockingDto blockingDto) {
+        reservedService.isPropertyReserved(id, blockingDto.propertyId(),blockingDto.startDate(),blockingDto.endDate());
         Block block = blockMapper.toEntity(blockingDto);
         block.setId(id);
+        block.setRecordStatus(RecordStatus.EXIST);
         blockRepository.save(block);
         return Response.builder().id(String.valueOf(id))
-                .href(WebMvcLinkBuilder.linkTo(BlockController.class).slash(id).withSelfRel().toString())
+                .href(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(BlockController.class).getBlockedById(block.getId())).toString())
                 .message("Request Processed Successfully.").build();
     }
 
@@ -43,7 +48,10 @@ public class BlockService {
     }
 
     public Response deleteBlockedById(int id) {
-        blockRepository.updateStatusById(RecordStatus.REMOVED,id);
+        int count = blockRepository.removeExistingById(id);
+        if (count == 0){
+            throw new InvalidInputException("Block Does Not Exist.");
+        }
         return Response.builder().message("Request Processed Successfully.").build();
     }
 }

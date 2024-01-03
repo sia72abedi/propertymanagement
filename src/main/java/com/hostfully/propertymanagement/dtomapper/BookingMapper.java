@@ -2,6 +2,7 @@ package com.hostfully.propertymanagement.dtomapper;
 
 import com.hostfully.propertymanagement.dto.BookingDto;
 import com.hostfully.propertymanagement.dto.BookingGetDto;
+import com.hostfully.propertymanagement.dto.BookingUpdateDto;
 import com.hostfully.propertymanagement.entities.Booking;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
@@ -26,4 +27,7 @@ public interface BookingMapper {
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     Booking partialUpdate(BookingGetDto bookingGetDto, @MappingTarget Booking booking);
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    Booking partialUpdate(BookingUpdateDto bookingGetDto, @MappingTarget Booking booking);
 }
